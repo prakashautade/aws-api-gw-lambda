@@ -1,5 +1,6 @@
 import { Entity } from "./entity/entity";
 import { APIGatewayProxyResult } from "aws-lambda";
+import { Error } from "./entity/error";
 
 export class Result implements APIGatewayProxyResult {
     statusCode: number;
@@ -11,9 +12,9 @@ export class Result implements APIGatewayProxyResult {
         return this;
     }
 
-    public invalidRequest(errorMessae: string): Result {
+    public invalidRequest(error: Error): Result {
         this.statusCode = 400;
-        this.body = JSON.stringify({message: errorMessae}, null, 2);
+        this.body = JSON.stringify(error, null, 2);
         return this;
     }
 
@@ -27,7 +28,7 @@ export class Result implements APIGatewayProxyResult {
     /**
      * getBody
      */
-    public getBody(): string {
-        return this.body;
+    public getBody(): Entity {
+        return JSON.parse(this.body);
     }
 }

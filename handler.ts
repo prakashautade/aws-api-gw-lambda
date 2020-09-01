@@ -1,7 +1,8 @@
 import { APIGatewayProxyHandler, Context, APIGatewayProxyResult } from 'aws-lambda';
 import 'source-map-support/register';
-import { Greeting } from './response/entity/greeting';
-import { Result } from './response/result';
+import { Greeting } from './result/entity/greeting';
+import { Result } from './result/result';
+import { Error } from './result/entity/error';
 
 export const greeting: APIGatewayProxyHandler = async (event, _context) => {
   const result: Result = new Result();
@@ -10,6 +11,7 @@ export const greeting: APIGatewayProxyHandler = async (event, _context) => {
     const greeting: Greeting = new Greeting(message);
     return result.ok(greeting);
   } else {
-    return result.invalidRequest("Parameter message required");
+    const error: Error = new Error("Parameter message required");
+    return result.invalidRequest(error);
   }
 };
