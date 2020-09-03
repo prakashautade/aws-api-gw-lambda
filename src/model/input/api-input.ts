@@ -1,13 +1,14 @@
-import { Entity } from "./entity";
-
-export class Error implements Entity {
+export class APIInput implements Input {
     message: string;
 
     constructor(message: string) {
         this.message = message;
     }
 
+    /**
+     * getMessage
+     */
     public getMessage(): string {
-       return this.message; 
+        return this.message;
     }
 }
